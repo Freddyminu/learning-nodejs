@@ -1,4 +1,5 @@
 const os = require('os') // common JS
+const log = require('./logger')
 
 setInterval(() => {
     const {freemem, totalmem} = os
@@ -15,6 +16,8 @@ setInterval(() => {
     console.clear()
     console.log("======= PC STATS =======")
     console.table(stats)
+
+    log(JSON.stringify(stats))
 
 }, 1000)
 

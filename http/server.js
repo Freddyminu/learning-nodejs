@@ -2,38 +2,40 @@ const http = require('http') // http e tudo relacionado sao tipo biblitecas esse
 const fs = require('fs') // arquivos
 const path = require('path') // boa pratica de encontro do melhor caminho possivel pro arquivo
 
+
 http.createServer((req, res) => {
     
 
     const file = req.url === '/' ? 'index.html' : req.url
-    console.log(file)
+    const filePath = path.join(__dirname, 'public', file) // localhost:5000/file
+    const extname = path.extname(filePath)
 
+    const allowedFileTypes = ['.html','.css','.js']
+    const allowed = allowedFileTypes.find( item=> item == extname )
 
-
-
-
-
-
-
-
-
-
-
-
-
-    if(req.url === '/')
-        fs.readFile(
-            path.join(__dirname, 'public', 'index.html'), // localhost:5000/file
-            (err, content) => { // err eh erro n sei pq precisa colocar e content eh o conteudo 
-                if(err) throw err
-                
-                res.end(content)
-            }
-        )
-
-    if(req.url === '/contato')
-        return res.end('<h1>Contato</h1>')
+    if(!allowed) return
+    
+    fs.readFile(
+        filePath,
+        (err, content) => { // err eh erro n sei pq precisa colocar e content eh o conteudo 
+            if(err) throw err
+            
+            res.end(content)
+        }
+    )
+ 
+    
 }).listen(5000, () => console.log('Server is running'))
+
+
+
+
+
+
+
+
+
+
 
 
 

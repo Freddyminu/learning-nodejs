@@ -29,6 +29,13 @@ function addElement({ name, url }) {
     ul.append(li)
 }
 
+async function load(){
+    const res = await fetch ("http://localhost:3000/").then((data) => data.json())
+    res.url.map(url => addElement(url))
+}    
+
+load()
+
 function removeElement(el) {
     if (confirm('Tem certeza que deseja deletar?'))
         el.parentNode.remove()
